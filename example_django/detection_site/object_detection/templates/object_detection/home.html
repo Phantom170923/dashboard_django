@@ -1,0 +1,11 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+<style>
+    h1 {color: #fff; text-align: center; font-size: 30px;}
+    p {color: #fff; text-align: center; padding-top: 80px;}
+</style>
+<h1>Добро пожаловать на "Платформу по обнаружению объектов"</h1>
+<p>Это домашняя страница Вашего приложения</p>
+<a style="color: white; background: #FFA500; box-shadow: 0 5px 0; padding: 0.8em 1.25em; border-radius: 0.4em" href="{% url 'object_detection:dashboard' %}">Go to Dashboard</a>
+{% endblock %}

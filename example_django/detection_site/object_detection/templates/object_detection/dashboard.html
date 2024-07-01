@@ -1,0 +1,51 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+<style>
+    h2 {color: #fff; text-align: center; padding-top: 50px;}
+    p {color: #fff; text-align: center; padding-top: 30px; font-size: 17px;}
+
+
+</style>
+<h2>Dashboard</h2>
+<p>Загрузите изображение, и программа обнаружит, что на нем изображено</p>
+<a style=" margin-top: 50px; margin-left: 41%" href="{% url 'object_detection:add_image_feed' %}" class="btn btn-success mb-3">Добавить изображение</a>
+
+{% for feed in image_feeds %}
+<div class="card mb-3">
+    <div class="card-header">
+        <form action="{% url 'object_detection:process_feed' feed.id %}" method="post" class="d-inline process-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="model_type_{{ feed.id }}">Выбрать модель</label>
+                        <select name="model_type" id="model_type_{{ feed.id }}" class="form-control">
+                            <option value="model_1">Объекты на изображении</option>
+                            <option value="model_2">Объекты на изображении 2.0</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-secondary process-button">Обработать</button>
+                    <div class="loader" style="display: none"></div>
+                </form>
+    </div>
+    <div class="card-body">
+        <a href="{{ feed.image.url }}" target="_blank">
+            <img src="{{ feed.image.url }}" alt="Original Image" style="width: 50px; height: 50px;">
+        </a>
+        {% if feed.processed_image %}
+        <a href="{{ feed.processed_image.url }}" target="_blank">
+            <img src="{{ feed.processed_image.url }}" alt="Processed Image" style="width: 50px; height: 50px;">
+        </a>
+        <ul>
+            {% for obj in feed.detected_objects.all %}
+            <li>{{ obj.object_type }} - {{ obj.confidence|floatformat:2 }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <form action="{% url 'object_detection:delete_image' feed.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+    </form>
+</div>
+{% endfor %}
+{% endblock %}

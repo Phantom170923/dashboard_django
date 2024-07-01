@@ -1,0 +1,33 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+
+<style>
+    h2 {Color: white;  text-align: center}
+    button {
+        background-color: green;
+        box-shadow: 0 5px 0 light;
+        color: white;
+        position: relative;
+        text-decoration: none;
+
+    }
+    button:hover {
+        background-color: green;
+    }
+    button:active {
+        box-shadow: none;
+        top: 5px;
+    }
+</style>
+
+<h2>Вход в личный кабинет</h2>
+<form style="color: #fff" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Войти</button>
+</form>
+<div>
+    <p><a style="color: #fff" href="{% url 'object_detection:register' %}">Регистрация</a></p>
+</div>
+{% endblock %}

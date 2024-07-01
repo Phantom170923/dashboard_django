@@ -1,0 +1,13 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+<style>
+    h2 {color: #fff; text-align: center}
+</style>
+<h2>Add Image Feed</h2>
+<form style="color: #fff" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Загрузить изображение</button>
+</form>
+{% endblock %}

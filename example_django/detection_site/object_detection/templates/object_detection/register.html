@@ -1,0 +1,14 @@
+{% extends "object_detection/base.html" %}
+
+{% block content %}
+<style>
+    h2 {color: #fff}
+</style>
+<h2>Регистрация</h2>
+<form style="color: #fff" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зарегистрироваться</button>
+</form>
+<a href="{% url 'object_detection:login' %}">Вход, если уже зарегистрировались</a>
+{% endblock %}
